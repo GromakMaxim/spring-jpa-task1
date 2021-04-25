@@ -19,18 +19,18 @@ public class PersonsController {
     //example: http://localhost:8080/persons/by-city?city=Moscow
     @GetMapping("/persons/by-city")
     public List getPersonsByCity(@RequestParam String city) {
-        return personRepository.findByCity(city);
+        return personRepository.customizedSearchByCity(city);
     }
 
     //example: http://localhost:8080/persons/by-age?age=3
     @GetMapping("/persons/by-age")
     public List getPersonsByAge(@RequestParam int age) {
-        return personRepository.findByAgeLessThanOrderByAgeAsc(age);
+        return personRepository.customizedSearchByAge(age);
     }
 
     //example: http://localhost:8080/persons/by-name-and-surname?name=Phillipps&surname=Nicholson
     @GetMapping("/persons/by-name-and-surname")
-    public Optional<Person> advancedSearch(@RequestParam String name, @RequestParam String surname) {
-        return personRepository.findByNameAndSurname(name, surname);
+    public List<Optional<Person>> advancedSearch(@RequestParam String name, @RequestParam String surname) {
+        return personRepository.customizedSearchByNameAndSurname(name, surname);
     }
 }

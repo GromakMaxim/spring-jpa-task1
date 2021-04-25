@@ -12,9 +12,12 @@ import java.util.Optional;
 @Repository
 public interface IPersonRepository extends JpaRepository<Person, Long> {
 
-    List<Person> findByCity(String cityOfLiving);
+    @Query("select p from Person p where p.city=:city")
+    List<Person> customizedSearchByCity(@Param("city") String cityOfLiving);
 
-    List<Person> findByAgeLessThanOrderByAgeAsc(int age);
+    @Query("select p from Person p where p.age < :age order by :age desc ")
+    List<Person> customizedSearchByAge(@Param("age") int age);
 
-    Optional<Person> findByNameAndSurname(String name, String surname);
+    @Query("select p from Person p where p.name = :name and p.surname = :surname")
+    List<Optional<Person>> customizedSearchByNameAndSurname(@Param("name") String name, @Param("surname") String surname);
 }
